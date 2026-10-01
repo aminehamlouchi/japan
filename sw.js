@@ -1,5 +1,5 @@
 // Keeps a copy of the trip page on the phone so it opens without signal.
-const C = "j26-v15";
+const C = "j26-v16";
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(["./", "./index.html", "./icon.png"]).catch(() => {}))); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
@@ -7,7 +7,7 @@ self.addEventListener("fetch", e => {
   if (r.method !== "GET") return;
   const url = new URL(r.url);
   const isPage = r.mode === "navigate" || url.pathname.endsWith("/") || url.pathname.endsWith(".html");
-  const isFont = url.hostname.includes("fonts.googleapis.com") || url.hostname.includes("fonts.gstatic.com");
+  const isFont = url.hostname.includes("fonts.googleapis.com") || url.hostname.includes("fonts.gstatic.com") || (url.origin === location.origin && url.pathname.includes("/img/"));
   if (isPage) {
     e.respondWith(fetch(r).then(res => { const cp = res.clone(); caches.open(C).then(c => c.put(r, cp)); return res; }).catch(() => caches.match(r).then(m => m || caches.match("./index.html"))));
   } else if (isFont) {
