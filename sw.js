@@ -1,5 +1,5 @@
 // Keeps a copy of the trip page on the phone so it opens without signal.
-const C = "j26-v21";
+const C = "j26-v22";
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(["./", "./index.html", "./icon.png"]).catch(() => {}))); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
