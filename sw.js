@@ -1,7 +1,7 @@
 // Keeps a copy of the trip page on the phone so it opens without signal.
 // C holds the page and changes with every deploy. S holds photos, icons, fonts, the map library and
 // map tiles, and is kept across deploys so nothing has to be downloaded again.
-const C = "j26-v39";
+const C = "j26-v40";
 const S = "j26-static";
 const SHELL = ["./icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest"];
 const WAIT = 4000; // on weak signal, show the saved copy after this long and update it in the background
