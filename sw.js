@@ -1,7 +1,7 @@
 // Keeps a copy of the trip page on the phone so it opens without signal.
 // C holds the page and changes with every deploy. S holds photos, icons, fonts, the map library and
 // map tiles, and is kept across deploys so nothing has to be downloaded again.
-const C = "j26-v48";
+const C = "j26-v49";
 const S = "j26-static";
 const SHELL = ["./icon.png", "./icon-192.png", "./icon-512.png", "./manifest.webmanifest"];
 const WAIT = 4000; // on weak signal, show the saved copy after this long and update it in the background
@@ -74,3 +74,22 @@ async function warm(list) {
     try { const res = await fetch(u); if (res.ok) await s.put(u, res); } catch (_) { return; }
   }
 }
+
+// Notifications (since v49). The Worker sends {title, body, url, tag}; tapping one opens the app at that page.
+self.addEventListener("push", e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (_) { d = {body: e.data ? e.data.text() : ""}; }
+  e.waitUntil(self.registration.showNotification(d.title || "Japan", {
+    body: d.body || "", icon: "./icon-192.png", badge: "./icon-192.png", tag: d.tag || undefined, data: {url: d.url || "./"}}));
+});
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  const url = new URL((e.notification.data && e.notification.data.url) || "./", self.registration.scope);
+  e.waitUntil((async () => {
+    const open = await self.clients.matchAll({type: "window", includeUncontrolled: true});
+    for (const c of open) {
+      if ("focus" in c) { await c.focus(); c.postMessage({go: url.hash || "#home"}); return; }
+    }
+    if (self.clients.openWindow) await self.clients.openWindow(url.href);
+  })());
+});
