@@ -1423,7 +1423,7 @@ body.gated .rp-bub{display:none}
 <div class="who-ov" id="whoOv"></div>
 
 <script>
-const SITE_V = 72;   // the version, from the cache name in sw.js; shown in the footer
+const SITE_V = 73;   // the version, from the cache name in sw.js; shown in the footer
 /* =====================================================================
    JAPAN 26/27 TRIP SITE
    Edit the data below, run build.py, push. Every page renders from it.
@@ -5281,7 +5281,7 @@ async function frDrawMap(){
     const m = L.marker(r0.ll, {icon}).addTo(map).bindPopup(pop, {maxWidth:300, maxHeight:320});
     pts.push(r0.ll); if(focus && rs.includes(focus)) focusMarker = m;
   });
-  if(focusMarker){ map.setView(focus.ll, 16); setTimeout(() => focusMarker.openPopup(), 250); }
+  if(focusMarker){ map.setView(focus.ll, 16); setTimeout(() => focusMarker.openPopup(), 250); el.scrollIntoView({block:"center"}); }
   else if(pts.length){ const tok = pts.filter(p => p[0] > 35.5 && p[0] < 35.8 && p[1] > 139.5 && p[1] < 139.95);
     map.fitBounds(tok.length > pts.length / 2 && !fr.day && !fr.shows.length ? tok : pts, {padding:[30,30], maxZoom:15}); }
   else map.setView([35.68, 139.75], 11);
