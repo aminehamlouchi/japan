@@ -1446,6 +1446,17 @@ body.frx-on{overflow:hidden}
 .frx-badge.yt{background:#e62117}
 .frx-cap{text-align:center}
 .frx-box{gap:10px}
+/* ---- H-0071 to-dos: steps and who's done ---- */
+.act-steps{margin:8px 0 0;padding-left:20px;font-size:14px;line-height:1.45}
+.act-steps li{margin:0 0 6px}
+.act-steps li::marker{font-weight:700;color:var(--muted)}
+.act-who{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.act-pp{display:inline-flex;align-items:center;gap:5px;font:inherit;font-size:12.5px;font-weight:700;padding:4px 10px 4px 6px;border-radius:999px;border:1.5px solid var(--line2);background:var(--card);color:var(--muted)}
+.act-pp i{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line2);font-style:normal;font-size:11px;line-height:1}
+.act-pp.on{color:var(--ink);border-color:color-mix(in srgb,var(--green,#47663f) 50%,var(--line2))}
+.act-pp.on i{background:var(--green,#47663f);border-color:var(--green,#47663f);color:#fff}
+.act-pp.mine{cursor:pointer;border-style:dashed}
+.act-pp.mine.on{border-style:solid}
 </style>
 </head>
 <body>
@@ -1479,7 +1490,7 @@ body.frx-on{overflow:hidden}
 <div class="who-ov" id="whoOv"></div>
 
 <script>
-const SITE_V = 75;   // the version, from the cache name in sw.js; shown in the footer
+const SITE_V = 76;   // the version, from the cache name in sw.js; shown in the footer
 /* =====================================================================
    JAPAN 26/27 TRIP SITE
    Edit the data below, run build.py, push. Every page renders from it.
@@ -2274,6 +2285,56 @@ const PLAN_NEWS = {id:"2026-10-23", on:"2026-10-23",
 /* One line about the site itself, shown in the popup for 21 days after `on`. */
 const SITE_NEWS = {on:"2026-10-23", t:"Tabs on the Money page: who paid for whom, with an itemized receipt for everyone, and Settle up shows the fewest payments that square everyone. Also new: 4 badges (Amine AI, the Home Screen app, notifications, paying back), and Amine can now read chats with Amine AI."};
 const ACTIONS = [
+ /* H-0071 (Nov 26, approved by Amine): the pre-trip to-dos, with steps. steps use **bold** and [text](link). due = what the card says instead of the date. */
+ {id:"vjw", t:"Visit Japan Web", n:"Japan's online arrival form. It gives you two QR codes to show at the airport instead of paper forms.", who:"Everyone", by:"2026-12-11", level:"now", steps:[
+   "Go to [vjw-lp.digital.go.jp](https://vjw-lp.digital.go.jp/en/) and tap **New account**. Sign up with your email and enter the code they send you.",
+   "Log in and tap **Register user details**, then **Yourself**. Scan your passport with your phone camera (or type it in). Answer \"No\" to having a Japanese passport and \"No\" to having a re-entry permit.",
+   "Tap **Register planned entry/return**, then **New registration**. Enter your arrival date in Japan and your own airline and flight number (it's on the [Flights](#flights) page).",
+   "For the address where you're staying, use the first stay: postal code **169-0074**, Tokyo, Shinjuku-ku, **Kita-Shinjuku 4-14-8, Yamazaki Bldg 301**, phone **03-6705-5554**.",
+   "Open **Disembarkation card for foreigner** (immigration): purpose **Tourism**, length of stay is your own number of days, answer the yes or no questions, and register it.",
+   "Open **Customs declaration**: answer the questions (for most of us they're all \"No\"), and register it.",
+   "Tap **Display QR code** for both and take a screenshot of each. You show these at the airport when you land."]},
+ {id:"step", t:"STEP sign-up", n:"Free US government sign-up, so the embassy can reach you in an emergency (earthquake, typhoon) and you get alerts.", who:"Everyone", by:"2026-12-11", level:"now", steps:[
+   "Go to [step.state.gov](https://step.state.gov) and tap **Enroll**. Create the account (it may send you through Login.gov) and confirm your email.",
+   "Tap **Add a trip**. Country: **Japan**. Your own dates in Japan.",
+   "Address in Japan: **Kita-Shinjuku 4-14-8, Yamazaki Bldg 301, Shinjuku-ku, Tokyo 169-0074**.",
+   "Add an emergency contact at home (a parent is fine).",
+   "Make sure the **US Embassy Tokyo** and the **US Consulate Osaka-Kobe** are both on the trip, then **Submit**."]},
+ {id:"suica", t:"Suica in Apple Wallet", n:"Suica is the train card. With it in your Wallet you tap your phone at every train gate and in most convenience stores. For everyone with an iPhone.", who:"Everyone", by:"2026-11-30", due:"now", level:"now", steps:[
+   "**Do this outside noon to 2 PM Eastern.** Japan's Suica system is down then, and it just fails.",
+   "Open the **Wallet** app and tap **+**.",
+   "Tap **Transit Card**, pick **Suica**, and load **¥1,000** to start.",
+   "Pay with a card in your Wallet. If it gets declined, try a different card (Amex and Mastercard usually work; many US Visa cards get declined).",
+   "Go to **Settings > Wallet & Apple Pay > Express Transit Card** and pick **Suica**, so you can tap without unlocking your phone.",
+   "You can add money any time from the Wallet app."]},
+ {id:"phone-data", t:"Phone data in Japan", n:"Make sure your phone works the moment you land.", who:"Everyone", by:"2026-12-20", level:"now", steps:[
+   "Check whether your plan already covers Japan: open your carrier's app (Verizon, AT&T or T-Mobile) and look for **international** or **travel**.",
+   "If it's included, you're done. If it costs about $10 to $12 a day, buy an eSIM instead.",
+   "eSIM: download the **Airalo** app, pick **Japan**, and buy an unlimited plan for your days (about $24 for 12 days). Install it at home but leave it **off**.",
+   "Check that your phone is unlocked: **Settings > General > About > Carrier Lock** should say **No SIM restrictions**.",
+   "When you land: turn on the eSIM and turn on **Data Roaming** for the eSIM only."]},
+ {id:"kart-upload", t:"Upload your kart permit", n:"No upload means you can't drive on Jan 3. After Dec 27 we can't drop you for a refund. Mousa, Hadey and Sam still need to do this.", who:"Everyone", by:"2026-12-27", level:"now", steps:[
+   "No permit yet: go to any **AAA** with your US driver's license, 2 passport photos and about $20. It takes about 10 minutes and you get the little gray booklet (the offices are on the permit to-do below).",
+   "Open your link. **Mousa and Hadey:** [your upload link](https://streetkart.tick.et/license/#/?accesskey=smwhz4yfxU4Hnv6VQ4Wu8VU1P5VapgsO). **Sam:** [your upload link](https://streetkart.tick.et/license/#/?accesskey=752OjBZYrjXm6Qq7akCvGPG2TkwsZfIu) (your slot says \"Amine Hamlouchi (2)\").",
+   "Mousa and Hadey: pick an **empty slot** (not Amine's, not Eb's). Sam: use your slot and change the name.",
+   "Type your name **exactly like your passport**, your email, and Country: **United States**.",
+   "Upload 2 photos: the permit's **cover page** and the **page with your face**. Hit save.",
+   "On Jan 3 bring the **original** permit, your US license and your passport."]},
+ {id:"insurance", t:"Travel medical insurance: decide", n:"Optional. Japan doesn't require it, but most US health plans pay little or nothing there, and hospitals usually want payment before you leave.", who:"Everyone", by:"2026-12-20", level:"now", steps:[
+   "Call the number on the back of your health insurance card and ask: \"Am I covered for emergencies in Japan?\"",
+   "If not, go to [squaremouth.com](https://www.squaremouth.com), pick Japan, enter your own dates and age, and filter for **medical** plans. They run about $30 to $60.",
+   "Buy one and save the PDF on your phone.",
+   "Tick the box either way, so we know you decided."]},
+ {id:"cash", t:"Cash plan: read it, then tick", n:"How to get yen without fees.", who:"Everyone", by:"2026-12-23", due:"before you fly", level:"now", steps:[
+   "Bring a **debit card**. Don't exchange money in the US.",
+   "After you land, use a **7-Eleven ATM**: pick English, take out about ¥30,000 to ¥40,000.",
+   "If it asks to convert to dollars, say **No** (take yen).",
+   "**Never use a credit card at an ATM.** That's a cash advance with fees and interest.",
+   "Many places are cash only, so keep some yen on you."]},
+ {id:"checkin", t:"Check in for your own flight", n:"Your own airline, 24 hours before your flight to Japan.", who:"Everyone", by:"2026-12-23", due:"24 hours before your flight", level:"now", steps:[
+   "Set a reminder now for 24 hours before your flight to Japan.",
+   "Check in in your airline's app. If it won't let you, check in at the airport counter.",
+   "Get to the airport **3 hours** before an international flight."]},
  {id:"vote-plan", t:"Vote on the plan", n:"Slide every undecided item from -5 to +5 on the Vote tab. About 5 minutes. This ticks itself once all 13 undecided items have your vote; the scheduled stops are optional extra credit.", who:"Everyone", by:"2026-10-31", go:"#vote/plan", level:"now", auto:"votes"},
  {id:"rank-stays", t:"Rank the stays", n:"Put the places at each stop in your order on the Vote tab. If you ranked before, your order is kept: put the new places where you want, and drag a row or use the arrows to change your order any time. Ticks itself once every place at all three stops is placed. Ranking closed Sat Oct 31: Kita-Shinjuku, Kishinosato, Lakeland and Tamachi won, and every other option is cancelled.", who:"Everyone", by:"2026-10-31", go:"#vote/stays", level:"now", auto:"ranks"},
  {id:"read-plan", t:"Read what changed in the plan", n:"Open \"What changed in the plan\" on Today, read the changes, and press Got it. It ticks itself.", who:"Everyone", by:"2026-10-31", level:"now", auto:"seen", go:"#home"},
@@ -2291,8 +2352,6 @@ const ACTIONS = [
  {id:"hadey-flight", t:"Book your flights", n:"Booked on Oct 8: Narita 5:55 PM Sun Dec 27, home from Haneda on Jan 11. Thanks.", who:"Hadey", by:"2026-10-15", level:"now", auto:"flight"},
  {id:"hadey-pokepark", t:"Enter the PokéPark lottery yourself", n:"Enter the PokéPark lottery yourself by Oct 10. 1 adult Town Pass, Jan 4, 11:00. Amine's application covers the other six, and yours is a separate draw. Nothing is charged unless you're picked.", who:"Hadey", by:"2026-10-10", link:"https://ticket-en.pokepark-kanto.co.jp/", level:"now"},
  {id:"amine-pokepark-pay", t:"Pay for PokéPark if we're picked", n:"Pay for PokéPark by Oct 31 if we are picked. The result comes by email around the end of October. 6 Town Passes, ¥33,000 (about $209); the other five each pay you back about $35.", who:"Amine", by:"2026-10-31", link:"https://ticket-en.pokepark-kanto.co.jp/", level:"soon"},
- {id:"suica", t:"Suica in Apple Wallet", n:"Add it and load ¥3,000 as a test. It's the tap card for every train, bus and konbini.", who:"Everyone", by:"2026-12-20", link:"https://www.jreast.co.jp/multi/en/welcomesuica/welcomesuica.html", level:"later"},
- {id:"esim", t:"Buy a Japan eSIM", n:"10 days of data, installed before you leave. Don't count on airport wifi.", who:"Everyone", by:"2026-12-20", level:"later"},
 ];
 
 /* Photos (img/<id>.webp, from Wikimedia Commons). f file, a artist, l license, u page. */
@@ -3480,10 +3539,14 @@ function actionRow(a){
   const me = meP(); const done = me ? actDone(a.id, me.name) : false;
   const who = a.who==="Everyone" ? PEOPLE : PEOPLE.filter(p=>p.name===a.who);
   const doneBy = who.filter(p=>actDone(a.id, p.name)).map(p=>p.name);
-  const p = dparts(a.by); const past = Date.parse(a.by+"T23:59:00-04:00") < Date.now();
+  const p = dparts(a.by); const past = !a.due && Date.parse(a.by+"T23:59:00-04:00") < Date.now();
+  const dueTx = a.due ? (a.due==="now" ? "do it now" : a.due) : `by ${p.mon} ${p.d}`;
   const pr = me && a.auto ? actProgress(a, me.name) : null, tx = actText(a);
-  const sum = `<div class="act-b"><b>${esc(tx.t)}</b>${tx.news&&!done?`<span class="act-news">${esc(tx.news)}</span>`:""}<span class="small muted">${a.who==="Everyone"?"Everyone":esc(a.who)} · by ${p.mon} ${p.d}${past?" · overdue":""}${pr&&!done?` · you: ${pr.n} of ${pr.of} ${pr.word}${pr.missing&&pr.missing.length<=3?`. Left: ${pr.missing.map(esc).join(", ")}`:""}`:""}${a.who==="Everyone"&&vote.all?` · ${doneBy.length} of ${PEOPLE.length} done`:""}</span></div>`;
-  const body = `<p class="small" style="margin:0">${esc(tx.news&&!done ? a.n : tx.n)}</p>${placesHtml(a)}${a.auto?`<p class="small muted" style="margin:6px 0 0">This one ticks itself. No checkbox.${pr&&pr.missing&&pr.missing.length?` Still missing: ${pr.missing.map(esc).join(", ")}.`:""}</p>`:""}${doneBy.length&&a.who==="Everyone"?`<p class="small muted" style="margin:6px 0 0">Done: ${faces(doneBy,"xs")} ${doneBy.map(esc).join(", ")}</p>`:""}${a.go||a.link?`<div class="daylinks">${a.go?`<a class="btn red sm" href="${a.go}">Go</a>`:""}${a.link?`<a class="btn ghost sm" href="${a.link}" target="_blank" rel="noopener">${ICON.link}Open the site</a>`:""}</div>`:""}`;
+  const sum = `<div class="act-b"><b>${esc(tx.t)}</b>${tx.news&&!done?`<span class="act-news">${esc(tx.news)}</span>`:""}<span class="small muted">${a.who==="Everyone"?"Everyone":esc(a.who)} · ${esc(dueTx)}${past?" · overdue":""}${pr&&!done?` · you: ${pr.n} of ${pr.of} ${pr.word}${pr.missing&&pr.missing.length<=3?`. Left: ${pr.missing.map(esc).join(", ")}`:""}`:""}${a.who==="Everyone"&&vote.all?` · ${doneBy.length} of ${PEOPLE.length} done`:""}</span></div>`;
+  const steps = a.steps ? `<ol class="act-steps">${a.steps.map(t=>`<li>${actMd(t)}</li>`).join("")}</ol>` : "";
+  const pp = a.steps && a.who==="Everyone" ? `<div class="act-who" aria-label="Who's done">${PEOPLE.map(x=>{ const d = actDone(a.id, x.name), mine = me && me.name===x.name;
+    return mine ? `<button class="act-pp mine${d?" on":""}" data-acttoggle="${a.id}" aria-pressed="${d}"><i aria-hidden="true">${d?"✓":""}</i>${esc(x.name)}</button>` : `<span class="act-pp${d?" on":""}"><i aria-hidden="true">${d?"✓":""}</i>${esc(x.name)}</span>`; }).join("")}</div>` : "";
+  const body = `<p class="small" style="margin:0">${esc(tx.news&&!done ? a.n : tx.n)}</p>${steps}${pp}${placesHtml(a)}${a.auto?`<p class="small muted" style="margin:6px 0 0">This one ticks itself. No checkbox.${pr&&pr.missing&&pr.missing.length?` Still missing: ${pr.missing.map(esc).join(", ")}.`:""}</p>`:""}${doneBy.length&&a.who==="Everyone"&&!a.steps?`<p class="small muted" style="margin:6px 0 0">Done: ${faces(doneBy,"xs")} ${doneBy.map(esc).join(", ")}</p>`:""}${a.go||a.link?`<div class="daylinks">${a.go?`<a class="btn red sm" href="${a.go}">Go</a>`:""}${a.link?`<a class="btn ghost sm" href="${a.link}" target="_blank" rel="noopener">${ICON.link}Open the site</a>`:""}</div>`:""}`;
   const chk = !me ? "" : a.auto ? `<span class="act-chk auto ${done?'on':''}" title="${done?'Done':'Ticks itself when finished'}"><span></span></span>` : `<label class="act-chk"><input type="checkbox" data-actdone="${a.id}" ${done?'checked':''} aria-label="Done: ${esc(a.t)}"><span></span></label>`;
   return `<div class="act ${done?'done':''}" data-ctx="action|${a.id}|${esc(a.t)}">${chk}<div style="flex:1;min-width:0">${fold(sum, body, false, "plain")}</div></div>`;
 }
@@ -3498,6 +3561,9 @@ function actionsHub(){
   return secHead("Needs you","今すぐ", me ? `<span class="small muted">tick it when it's done</span>` : "") + installCard() + pushCard() + aiCard() + (pnd ? `<button class="pn-open" data-plannews><span class="hanko sm" aria-hidden="true">新</span><span><b>What changed in the plan</b><span class="small muted">The ${pnd.mon} ${pnd.d} update, with the details</span></span><span aria-hidden="true">›</span></button>` : "") + `<div class="card tight hub"><div class="hub-h">${head}${vote.err?` <span class="chip c-line">offline</span>`:""}</div>${now.map(actionRow).join("")}${soon.length?fold(`<span class="small muted">Later: ${soon.length} more</span>`, soon.map(actionRow).join(""), false, "plain"):""}</div>`;
 }
 document.addEventListener("change", e=>{ const c=e.target.closest("[data-actdone]"); if(c) setActionDone(c.dataset.actdone, c.checked); });
+document.addEventListener("click", e=>{ const b=e.target.closest("[data-acttoggle]"); if(!b) return; const me=meP(); if(!me) return; e.preventDefault(); setActionDone(b.dataset.acttoggle, !actDone(b.dataset.acttoggle, me.name)); });
+/* H-0071 steps: **bold** and [text](link); links to our own pages stay in the page */
+function actMd(t){ return esc(t).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, a, u) => `<a href="${u}"${u.startsWith("#") ? "" : ` target="_blank" rel="noopener"`}>${a}</a>`); }
 
 /* ---- the popup. It shows when GUIDE_V goes up (Amine wants everyone told something), and since v30 also by itself
    whenever there are stay options this phone has not seen since its last visit. ---- */
